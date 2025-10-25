@@ -1,31 +1,46 @@
-from fastapi import APIRouter, HTTPException
-from app.users.models import Users
+from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import JSONResponse
+from app.users.models import User
+from app.users.serializers import UserResponse
 
 router = APIRouter(prefix = '/api/user')
 
+@router.get('/get-one-user/{user_id}', response_model = UserResponse)
+async def get_one_user(user_id: str) -> UserResponse:
 
-@router.get('/get-one-user/{user_id}', response_model = Users)
-async def get_one_user(user_id: int) -> Users:
+    if not user:
+        return JSONResponse(
+            status_code = 400,
+            content = {
+                "mgs":"User was not found"
+            }
+        )
+    
+    return JSONResponse(
+        status_code = 200,
+        content = {
+            "mgs":"User was found."
+        }
+    )
+
+
+@router.get('get-all-users/{limit}', response_model = list[UserResponse])
+async def get_all_users(limit: int = 10) -> list[UserResponse]:
     return
 
 
-@router.get('get-all-users', response_model = list[Users])
-async def get_all_users() -> list[Users]:
+@router.post('/create-user', response_model = UserResponse)
+async def create_user() -> UserResponse:
     return
 
 
-@router.post('/create-user')
-async def create_user():
+@router.delete('/delete-user/{user_id}', response_model = UserResponse)
+async def delete_user(user_id: int) -> UserResponse:
     return
 
 
-@router.delete('/delete-user/{user_id}')
-async def delete_user(user_id: int):
-    return
-
-
-@router.put('/update-user/{user_id}')
-async def update_user(user_id: int):
+@router.put('/update-user/{user_id}', response_model = UserResponse)
+async def update_user(user_id: int) -> UserResponse:
     return
 
 

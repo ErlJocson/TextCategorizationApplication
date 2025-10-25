@@ -1,15 +1,14 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from app.session.models import SessionManagement
 
 router = APIRouter(prefix = '/api/session')
 
-@router.get('/get-one-sesion/{session_id}', response_model = SessionManagement)
-def get_one_session(session_id: int) -> SessionManagement:
+@router.get('/get-one-sesion/{session_id}')
+def get_one_session(session_id: int):
     return 
 
-@router.get('/get-all-sessions', response_model = list[SessionManagement])
-def get_all_sessions() -> list[SessionManagement]:
+@router.get('/get-all-sessions')
+def get_all_sessions():
     return JSONResponse(
         content = {"data":[]},
         status_code = 200
