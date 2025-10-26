@@ -7,14 +7,6 @@ router = APIRouter(prefix = '/api/user')
 
 @router.get('/get-one-user/{user_id}', response_model = UserResponse)
 async def get_one_user(user_id: str) -> UserResponse:
-
-    if not user:
-        return JSONResponse(
-            status_code = 400,
-            content = {
-                "mgs":"User was not found"
-            }
-        )
     
     return JSONResponse(
         status_code = 200,
