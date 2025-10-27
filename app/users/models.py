@@ -4,8 +4,7 @@ from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
+from app.database import Base
 
 PH_TZ = pytz.timezone("Asia/Manila")
 

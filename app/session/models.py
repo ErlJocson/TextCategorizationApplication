@@ -1,12 +1,11 @@
 from datetime import datetime
 import pytz
 import uuid
-from sqlalchemy import Column, String, Datetime
+from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from app.database import Base
 
-
-Base = declarative_base()
 
 
 PH_TZ = pytz.timezone("Asia/Manila")
@@ -22,7 +21,7 @@ class Session(Base):
     session_id      = Column(String(36), primary_key = True, default = lambda: str(uuid.uuid4()))
     session_name    = Column(String(100), nullable = False)
     description     = Column(String(100), nullable = True)
-    date_created    = Column(Datetime(timezone = True), nullable = False, default = philippine_now)
+    date_created    = Column(DateTime(timezone = True), nullable = False, default = philippine_now)
     user_id         = Column(String(36), ForeignKey('user.user_id'), nullable = False)
 
     user            = relationship("User", back_populates = "session")
