@@ -6,9 +6,6 @@ import app.users.routes as user_router
 import app.session.routes as session_router
 import app.query.routes as query_router
 import app.database as database
-import app.users.models as user_models
-import app.session.models as session_models
-import app.query.models as query_models
 
 app = FastAPI(
     title = 'Text Categorization Application',
