@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 import app.users.routes as user_router
 import app.session.routes as session_router
 import app.query.routes as query_router
+import app.metadata.routes as metadata_router
 import app.database as database
 
 app = FastAPI(
@@ -16,6 +17,7 @@ app = FastAPI(
 app.include_router(user_router.router)
 app.include_router(session_router.router)
 app.include_router(query_router.router)
+app.include_router(metadata_router.router)
 
 app.add_middleware(
     CORSMiddleware,

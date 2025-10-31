@@ -9,20 +9,18 @@ router = APIRouter(prefix = '/api/user')
 
 @router.get('/get-one-user/{user_id}', response_model = UserResponse)
 async def get_one_user(user_id: str) -> UserResponse:
-    user = db.query(User).filter_by(user_id = user_id)
-
-    if not user:
+    user = db.query(User).filter_by(user_id = user_id).first()
+    if user is None:
         raise HTTPExeption(
             status_code = status.HTTP_404_NOT_FOUND,
             detail = f'{user_id} does not exist'
-        )
-    
+        )    
     return user
 
-@router.get('get-all-users', response_model = list[UserResponse])
+@router.get('/get-all-users', response_model = list[UserResponse])
 async def get_all_users(db: db_dependency) -> list[UserResponse]:
     users = db.query(User).all()
-    if not users:
+    if users is None:
         raise HTTPException(
             status_code = 404,
             detail = 'No user exists.'
@@ -35,7 +33,7 @@ async def create_user(user: UserCreate, db: db_dependency) -> UserResponse:
     db_user = User(**user.dict())
     
     try:
-        db.add(user)
+        db.add(db_user)
         db.commit()
         db.refresh(db_user)
         return db_user
@@ -58,7 +56,7 @@ async def create_user(user: UserCreate, db: db_dependency) -> UserResponse:
 async def delete_user(user_id: str, db: db_dependency) -> UserResponse:
     user_to_delete = db.query(User).filter_by(user_id=user_id).first()
 
-    if not user_to_delete:
+    if user_to_delete is None:
         raise HTTPException(
             status_code = status.HTTP_404_NOT_FOUND,
             details=f"{user_id} does not exist"
@@ -86,13 +84,4 @@ async def update_user(user_id: str, user_update: UserUpdate, db: db_dependency) 
     db.refresh()
 
     return user
-
-
-
-
-
-
-
-
-
 

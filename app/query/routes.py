@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from app.query.serializers import QueryResponse
+from app.query.models import Query
 
 router = APIRouter(prefix = '/api/query')
 

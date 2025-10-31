@@ -2,7 +2,6 @@ from datetime import datetime
 import pytz
 import uuid
 from sqlalchemy import Column, String, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -20,9 +19,10 @@ class Query(Base):
     query_name = Column(String(36), nullable = False)
     description = Column(String(36), nullable = False)
     date_created = Column(DateTime(timezone = True), nullable = False, default = philippine_now)
-    user_id = Column(String(36), ForeignKey('user.user_id'), nullable = False)
-    session_id = Column(String(36), ForeignKey('session.session_id'), nullable = False)
+    published = Column(String(10), nullable = False)
     
-    user = relationship('User', back_populates = 'query')
-    session = relationship('Session', back_populates = 'query')
+    user_id = Column(String(36), ForeignKey('user.user_id'), nullable = False)
+    metainfo_id = Column(String(36), ForeignKey('metainfo.metainfo_id'), nullable = False)
 
+    user = relationship('User', back_populates = 'queries')
+    metainfos = relationship('MetaInfo', back_populates = 'queries')

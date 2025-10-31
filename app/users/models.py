@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from app.database import Base
 
+
 PH_TZ = pytz.timezone("Asia/Manila")
 
 def philippine_now():
@@ -20,6 +21,9 @@ class User(Base):
     date_created    = Column(DateTime(timezone = True), nullable = False, default = philippine_now)
     role            = Column(String(100), nullable = False)
     password        = Column(String(100), nullable = False)
+    
+    sessions        = relationship("Session", back_populates = 'user', cascade = 'all, delete')
+    queries         = relationship("Query", back_populates = "user", cascade = 'all, delete')
+    metainfos       = relationship('MetaInfo', back_populates = 'user', cascade = 'all, delete')
 
-    query           = relationship("Query", back_populates = "user", cascade = 'all, delete')
-    session         = relationship("Session", back_populates = "user", cascade = 'all, delete')
+

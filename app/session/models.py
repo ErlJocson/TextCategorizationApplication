@@ -2,10 +2,8 @@ from datetime import datetime
 import pytz
 import uuid
 from sqlalchemy import Column, String, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from app.database import Base
-
 
 
 PH_TZ = pytz.timezone("Asia/Manila")
@@ -24,6 +22,5 @@ class Session(Base):
     date_created    = Column(DateTime(timezone = True), nullable = False, default = philippine_now)
     user_id         = Column(String(36), ForeignKey('user.user_id'), nullable = False)
 
-    user            = relationship("User", back_populates = "session")
-    query           = relationship("Query", back_populates = "session", cascade = 'all, delete')
-
+    user            = relationship("User", back_populates = "sessions")
+    metainfos       = relationship("MetaInfo", back_populates = "sessions", cascade = 'all, delete')

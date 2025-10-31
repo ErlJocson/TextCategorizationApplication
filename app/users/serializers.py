@@ -21,7 +21,7 @@ class UserUpdate(UserBase):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
     role: Optional[str] = None
-    password: Optional[str]
+    password: Optional[str] = None
 
     class Congif:
         from_attributes = True
